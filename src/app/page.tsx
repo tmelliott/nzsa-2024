@@ -160,6 +160,52 @@ export default function HomePage() {
           <Demo />
         </div>
       </Slide>
+
+      <Slide title="Next steps">
+        <List
+          items={[
+            "R package for describing 'ocap' functions and compiling them into valid Typescript definitions",
+            <div>
+              <p>Some (initial) widgets for common outputs</p>
+              <p>(simple) tables, plots, etc</p>
+            </div>,
+          ]}
+        />
+
+        <div>
+          Longer term:
+          <List items={["Rebuild iNZight using the new infrastructure"]} />
+        </div>
+      </Slide>
+
+      {/* thank you slide that mimics title slide */}
+      <Slide>
+        <div className="flex h-full flex-col items-center justify-center">
+          <h1 className="text-5xl font-bold tracking-tight text-red-600">
+            Thank you!
+          </h1>
+
+          <h2 className="mt-12 text-center text-xl">
+            Introducing rserve-ts:
+            <br />A modernised library for R-to-web communication
+          </h2>
+
+          <div className="mt-4 text-center">
+            <p className="font-bold text-red-600">Tom Elliott</p>
+            <p className="text-sm">https://github.com/tmelliott</p>
+            <p className="text-sm">https://inzight.co.nz/team/tom</p>
+          </div>
+
+          <div
+            className={`relative mt-12 w-full`}
+            style={{
+              height: size(12),
+            }}
+          >
+            <Image src="/ial-logo.png" alt="" fill={true} objectFit="contain" />
+          </div>
+        </div>
+      </Slide>
     </>
   );
 }
@@ -185,7 +231,7 @@ export const appSchema = { \n\
 
 const appCode =
   '// app.ts \n\
-import { R } from \'rserve-ts\'; \n\
+import R from \'rserve-ts\'; \n\
 import { appSchema } from \'./app\'; \n\
 \n\
 (async () => { \n\
@@ -198,5 +244,5 @@ import { appSchema } from \'./app\'; \n\
 \n\
   const y = app.bar("hello"); // y: number | \n\
   //   (Int32Array & { r_type: "int_array"; }; \n\
-  y.map((i) => console.log(i - 1)); [0, 1, 2, 3, 4] \n\
+  y.map((i) => console.log(i - 1)); // [0, 1, 2, 3, 4] \n\
 })();';
