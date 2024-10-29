@@ -9,18 +9,65 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
+export const size = (x: number, ratio?: number) =>
+  `min(${x}vh, ${x * (ratio ?? 4 / 3)}vw)`;
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${GeistSans.variable}`}>
+    <html lang="en" className={`${GeistSans.variable} text-[min(3vh,2.25vw)]`}>
       <body>
-        <main className="flex h-screen w-screen flex-col items-center bg-red-900 text-red-50">
-          <div className="aspect-[3/2] max-h-full max-w-full flex-1 p-4">
-            {children}
-          </div>
+        <main className="h-screen snap-y snap-mandatory items-center overflow-y-scroll bg-black bg-[url('/ial-bg.png')] bg-contain bg-bottom bg-no-repeat text-red-50">
+          {children}
         </main>
       </body>
     </html>
   );
 }
+
+export const Slide = ({
+  title,
+  children,
+}: {
+  title?: string;
+  children?: React.ReactNode;
+}) => {
+  return (
+    <div className={`h-screen w-full snap-start snap-always p-4`}>
+      <div className="isolate mx-auto flex aspect-[4/3] max-h-full max-w-full flex-col gap-6 rounded-lg bg-white/30 p-8 text-xl shadow shadow-black ring-1 ring-black/5 backdrop-blur-lg">
+        {title && (
+          <h1 className="text-3xl font-bold tracking-tight text-red-600">
+            {title}
+          </h1>
+        )}
+        {children}
+      </div>
+    </div>
+  );
+};
+
+const Arrow = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 512 512"
+    className="h-full w-full fill-red-400"
+  >
+    <path d="M256 8c137 0 248 111 248 248S393 504 256 504 8 393 8 256 119 8 256 8zm113.9 231L234.4 103.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L285.1 256 183.5 357.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L369.9 273c9.4-9.4 9.4-24.6 0-34z" />
+  </svg>
+);
+
+export const List = ({ items }: { items: React.ReactNode[] }) => {
+  return (
+    <ul className="mt-4 space-y-2">
+      {items.map((x) => (
+        <li className="grid grid-cols-[20px_1fr] items-start gap-4">
+          <div className="h-[1.5em]">
+            <Arrow />
+          </div>
+          {x}
+        </li>
+      ))}
+    </ul>
+  );
+};
