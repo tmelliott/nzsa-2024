@@ -26,7 +26,12 @@ export default function HomePage() {
               height: size(12),
             }}
           >
-            <Image src="/ial-logo.png" alt="" fill={true} objectFit="contain" />
+            <Image
+              src="/ial-logo.png"
+              alt=""
+              fill={true}
+              className="object-contain"
+            />
           </div>
         </div>
       </Slide>
@@ -202,7 +207,12 @@ export default function HomePage() {
               height: size(12),
             }}
           >
-            <Image src="/ial-logo.png" alt="" fill={true} objectFit="contain" />
+            <Image
+              src="/ial-logo.png"
+              alt=""
+              fill={true}
+              className="object-contain"
+            />
           </div>
         </div>
       </Slide>
