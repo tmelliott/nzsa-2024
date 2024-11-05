@@ -60,26 +60,38 @@ const useVersion = (app: App) => {
 
 const Rhist = ({ app }: { app: App }) => {
   const [n, setN] = useState(10);
-  const hist = useHist(app, n);
-  console.log(hist);
+  const [update, setUpdate] = useState(0);
+  const hist = useHist(app, n, update);
 
   return (
-    <div className="flex gap-2">
-      <input
-        type="number"
-        value={n}
-        size={5}
-        className="p-2 text-sm text-gray-800"
-        onChange={(e) => setN(parseInt(e.target.value))}
-      />
+    <div className="mt-4 flex flex-col gap-2">
+      <div className="flex items-center gap-2">
+        Sample size:
+        <input
+          type="number"
+          value={n}
+          size={5}
+          className="p-2 text-sm text-gray-800"
+          onChange={(e) => setN(parseInt(e.target.value))}
+        />
+        <button
+          className="rounded bg-orange-700 p-2 text-sm text-slate-50 shadow hover:bg-orange-800"
+          onClick={() => setUpdate(update + 1)}
+        >
+          Generate
+        </button>
+      </div>
       <div>
         {hist ? (
-          <div className="mt-2 flex items-end gap-1">
-            {Array.from(hist.counts).map((c, i) => (
+          <div className="mt-2 flex h-32 w-full items-end justify-between gap-1 border-b pb-1">
+            {Array.from(hist.freq).map((f, i) => (
               <div
                 key={i}
-                className="flex flex-col items-center"
-                style={{ height: c * 10, width: 10, backgroundColor: "white" }}
+                className="flex w-full flex-1 cursor-pointer flex-col items-center bg-white transition-[height] duration-300 hover:bg-gray-100"
+                style={{
+                  height: `${f * 100}%`,
+                }}
+                onClick={(e) => alert(`bin ${i}: ${hist.counts[i]}`)}
               ></div>
             ))}
           </div>
@@ -91,20 +103,31 @@ const Rhist = ({ app }: { app: App }) => {
   );
 };
 
-const useHist = (app: App, n: number) => {
+const useHist = (app: App, n: number, update: number) => {
   const [hist, setHist] = useState<{
     breaks: Float64Array;
     counts: Int32Array;
+    freq: number[];
   }>();
+  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout>();
+
   useEffect(() => {
+    if (n < 2) return;
     const getHist = async () => {
       const h = await app.histSample(n);
+      const nmax = Math.max(...h.data.counts.data);
       setHist({
         breaks: h.data.breaks.data,
         counts: h.data.counts.data,
+        freq: Array.from(h.data.counts.data).map((c) => c / nmax),
       });
     };
-    getHist();
-  }, [app]);
+    if (timeoutId) clearTimeout(timeoutId);
+    setTimeoutId(setTimeout(() => getHist(), 200));
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, [app, update]);
   return hist;
 };

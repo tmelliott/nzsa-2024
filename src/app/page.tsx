@@ -170,9 +170,12 @@ export default function HomePage() {
         <List
           items={[
             "R package for describing 'ocap' functions and compiling them into valid Typescript definitions",
+            <p>
+              React library for 'hooks' (e.g., <code>useRserve()</code>)
+            </p>,
             <div>
-              <p>Some (initial) widgets for common outputs</p>
-              <p>(simple) tables, plots, etc</p>
+              <p>Some (initial) widgets for common outputs:</p>
+              <p>tables, plots, etc.</p>
             </div>,
           ]}
         />
