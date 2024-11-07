@@ -2,6 +2,7 @@ import Image from "next/image";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { List, Slide, size } from "./layout";
 import Demo from "./demo";
+import { RserveDiagram } from "./diagram-rserve";
 
 export default function HomePage() {
   return (
@@ -37,15 +38,21 @@ export default function HomePage() {
       </Slide>
 
       <Slide title="What is Rserve?">
-        <div className="flex justify-center">DIAGRAM</div>
+        <RserveDiagram />
 
-        <List
-          items={[
-            "Really cool, especially in Ocap mode",
-            "Last updated ~6 years ago",
-            "Callbacks, plain old JavaScript, one big ol' object",
-          ]}
-        />
+        <div>
+          <h2>
+            <strong className="font-mono text-blue-400">rserve-js</strong>:
+            client library for JavaScript
+          </h2>
+          <List
+            items={[
+              "Really cool, especially in Ocap mode",
+              "Last updated ~6 years ago",
+              "Callbacks, plain old JavaScript, one big ol' object",
+            ]}
+          />
+        </div>
       </Slide>
 
       <Slide title="What is ReactJS/Typescript?">
@@ -82,30 +89,44 @@ export default function HomePage() {
       </Slide>
 
       <Slide title="Type assertion">
-        <h2 className="-mt-4 text-xl italic text-gray-200">
-          aka &ldquo;My To-do List&rdquo;
-        </h2>
+        <h2 className="-mt-4 text-xl italic text-gray-200"></h2>
 
-        <div className="flex gap-12">
-          <div className="h-full flex-1 rounded border border-gray-500 px-4 py-3 shadow-lg">
-            From R
-            <List
-              items={[
-                "possible, but not fun",
-                "functions that have explicitly defined input and output types",
-              ]}
+        <div className="relative">
+          <div className="absolute right-0 flex flex-col items-center px-4 text-black">
+            <Image
+              src="https://zod.dev/logo.svg"
+              alt="Zod"
+              width={150}
+              height={100}
             />
+            zod.dev
           </div>
-          <div className="h-full flex-1 rounded border border-gray-500 px-4 py-3 shadow-lg">
-            From JS/TS
-            <List
-              items={[
-                "zod (usually for APIs etc)",
-                "parses objects at run-time, throws error if invalid",
-                "remaining code can assume object is valid",
-              ]}
-            />
-          </div>
+          <SyntaxHighlighter
+            language="typescript"
+            customStyle={{
+              borderRadius: "0.5rem",
+            }}
+          >
+            {`import { z } from 'zod';
+
+const dataSchema = z.object({
+  name: string,
+  age: number
+});
+const data = dataSchema
+  .parse({ name: 'Henry', age: 27 }); // okay!
+console.log(data.name + " is " + data.age);
+// "Henry is 27";
+  `}
+          </SyntaxHighlighter>
+
+          {/* <List
+          items={[
+            "zod (usually for APIs etc)",
+            "parses objects at run-time, throws error if invalid",
+            "remaining code can assume object is valid",
+            ]}
+            /> */}
         </div>
       </Slide>
 
@@ -257,5 +278,7 @@ import { appSchema } from \'./app\'; \n\
 \n\
   const y = app.bar("hello"); // y: number | \n\
   //   (Int32Array & { r_type: "int_array"; }; \n\
-  y.map((i) => console.log(i - 1)); // [0, 1, 2, 3, 4] \n\
+  if (y instanceof Int32Array) { \n\
+    y.map((i) => console.log(i - 1)); // [0, 1, 2, 3, 4] \n\
+  } \n\
 })();';

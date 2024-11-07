@@ -81,9 +81,9 @@ const Rhist = ({ app }: { app: App }) => {
           Generate
         </button>
       </div>
-      <div>
-        {hist ? (
-          <div className="mt-2 flex h-32 w-full items-end justify-between gap-1 border-b pb-1">
+      <div className="mt-2 h-32 w-full border-b pb-1">
+        {hist && (
+          <div className="flex h-full w-full items-end justify-between gap-1">
             {Array.from(hist.freq).map((f, i) => (
               <div
                 key={i}
@@ -95,8 +95,6 @@ const Rhist = ({ app }: { app: App }) => {
               ></div>
             ))}
           </div>
-        ) : (
-          "loading..."
         )}
       </div>
     </div>
@@ -112,15 +110,26 @@ const useHist = (app: App, n: number, update: number) => {
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout>();
 
   useEffect(() => {
-    if (n < 2) return;
+    if (n < 2 || update === 0) return;
     const getHist = async () => {
       const h = await app.histSample(n);
       const nmax = Math.max(...h.data.counts.data);
-      setHist({
-        breaks: h.data.breaks.data,
-        counts: h.data.counts.data,
-        freq: Array.from(h.data.counts.data).map((c) => c / nmax),
-      });
+      if (hist === undefined) {
+        setHist({
+          breaks: h.data.breaks.data,
+          counts: h.data.counts.data.map((c) => 0),
+          freq: Array.from(h.data.counts.data).map((c) => 0),
+        });
+      }
+      setTimeout(
+        () =>
+          setHist({
+            breaks: h.data.breaks.data,
+            counts: h.data.counts.data,
+            freq: Array.from(h.data.counts.data).map((c) => c / nmax),
+          }),
+        100,
+      );
     };
     if (timeoutId) clearTimeout(timeoutId);
     setTimeoutId(setTimeout(() => getHist(), 200));

@@ -60,8 +60,8 @@ const Arrow = () => (
 export const List = ({ items }: { items: React.ReactNode[] }) => {
   return (
     <ul className="mt-4 space-y-2">
-      {items.map((x) => (
-        <li className="grid grid-cols-[20px_1fr] items-start gap-4">
+      {items.map((x, i) => (
+        <li className="grid grid-cols-[20px_1fr] items-start gap-4" key={i}>
           <div className="h-[1.5em]">
             <Arrow />
           </div>
