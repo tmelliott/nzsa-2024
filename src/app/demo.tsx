@@ -12,6 +12,7 @@ export default function Demo() {
       host: "ws://localhost:8942",
     });
     const a = await con.ocap(appFuns);
+    console.log(a);
     setApp(a);
   };
 
@@ -51,7 +52,7 @@ const useVersion = (app: App) => {
   useEffect(() => {
     const getVersion = async () => {
       const v = await app.version();
-      setVersion(v.data);
+      setVersion(v);
     };
     getVersion();
   }, [app]);
@@ -113,20 +114,20 @@ const useHist = (app: App, n: number, update: number) => {
     if (n < 2 || update === 0) return;
     const getHist = async () => {
       const h = await app.histSample(n);
-      const nmax = Math.max(...h.data.counts.data);
+      const nmax = Math.max(...h.counts);
       if (hist === undefined) {
         setHist({
-          breaks: h.data.breaks.data,
-          counts: h.data.counts.data.map((c) => 0),
-          freq: Array.from(h.data.counts.data).map((c) => 0),
+          breaks: h.breaks,
+          counts: h.counts.map((c) => 0),
+          freq: Array.from(h.counts).map((c) => 0),
         });
       }
       setTimeout(
         () =>
           setHist({
-            breaks: h.data.breaks.data,
-            counts: h.data.counts.data,
-            freq: Array.from(h.data.counts.data).map((c) => c / nmax),
+            breaks: h.breaks,
+            counts: h.counts,
+            freq: Array.from(h.counts).map((c) => c / nmax),
           }),
         100,
       );

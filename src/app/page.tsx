@@ -3,6 +3,11 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import { List, Slide, size } from "./layout";
 import Demo from "./demo";
 import { RserveDiagram } from "./diagram-rserve";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Introducing rserve-ts",
+};
 
 export default function HomePage() {
   return (
@@ -17,7 +22,7 @@ export default function HomePage() {
           </h2>
 
           <div className="mt-12 text-center">
-            <p className="font-bold text-red-600">Tom Elliott</p>
+            <p className="font-bold text-red-500">Tom Elliott</p>
             <p className="text-sm">NZSA 2024, Wellington</p>
           </div>
 
@@ -47,9 +52,9 @@ export default function HomePage() {
           </h2>
           <List
             items={[
-              "Really cool, especially in Ocap mode",
+              "Object-capability (Ocap) mode",
               "Last updated ~6 years ago",
-              "Callbacks, plain old JavaScript, one big ol' object",
+              "Outdated patterns",
             ]}
           />
         </div>
@@ -60,8 +65,8 @@ export default function HomePage() {
           <h4 className="font-bold">ReactJS</h4>
           <List
             items={[
-              "framework for building interactive web apps",
-              "increasingly popular, 1000's of packages (npmjs.com)",
+              "Framework for building interactive web apps",
+              "Increasingly popular, 1000's of packages (npmjs.com)",
             ]}
           />
         </div>
@@ -70,9 +75,9 @@ export default function HomePage() {
           <h4 className="font-bold">Typescript</h4>
           <List
             items={[
-              "adds types to JavaScript",
-              "development-time errors (literally as you type)",
-              "autocomplete (+ copilot = 🚀)",
+              "Adds types to JavaScript",
+              "Development-time errors (literally as you type)",
+              "Autocomplete (+ copilot = 🚀)",
             ]}
           />
         </div>
@@ -119,14 +124,6 @@ console.log(data.name + " is " + data.age);
 // "Henry is 27";
   `}
           </SyntaxHighlighter>
-
-          {/* <List
-          items={[
-            "zod (usually for APIs etc)",
-            "parses objects at run-time, throws error if invalid",
-            "remaining code can assume object is valid",
-            ]}
-            /> */}
         </div>
       </Slide>
 
@@ -135,12 +132,32 @@ console.log(data.name + " is " + data.age);
           items={[
             "Early work figuring out the data types, their R and JS shapes",
             "Writing helper functions for creating Zod schemas",
-            "Converting from callbacks to promises",
+            "Modular export",
+            "Replace callbacks with promises",
           ]}
         />
-
-        <p className="mt-12 italic">And now, let's see it in action &hellip;</p>
       </Slide>
+      {/*
+      <Slide title="Callback vs Promise">
+        <SyntaxHighlighter
+          language="typescript"
+          customStyle={{
+            borderRadius: "0.5rem",
+          }}
+        >
+          {`// callback (rserve-js)
+R.ocap((err, data) => {
+  data.sample(5, (err, res) => {
+    console.log('Sample: ', res);
+  });
+});
+
+// async/await
+const app = await R.ocap();
+const res = await app.sample(5);
+console.log('Sample: ', res);`}
+        </SyntaxHighlighter>
+      </Slide> */}
 
       <Slide title="Some R functions that do something cool">
         <div className="flex flex-1 items-center justify-center text-sm">
@@ -170,14 +187,19 @@ console.log(data.name + " is " + data.age);
 
       <Slide title="Write app">
         <div className="flex flex-1 items-center justify-center overflow-scroll text-sm">
-          <SyntaxHighlighter
+          {/* video coding.mp4 */}
+          <video controls className="rounded border border-slate-500 shadow">
+            <source src="/coding.mp4" type="video/mp4" />
+          </video>
+
+          {/* <SyntaxHighlighter
             language="typescript"
             customStyle={{
               borderRadius: "0.5rem",
             }}
           >
             {appCode}
-          </SyntaxHighlighter>
+          </SyntaxHighlighter> */}
         </div>
       </Slide>
 
@@ -215,12 +237,15 @@ console.log(data.name + " is " + data.age);
           </h1>
 
           <h2 className="mt-12 text-center text-xl">
-            Introducing rserve-ts:
-            <br />A modernised library for R-to-web communication
+            <strong>Introducing rserve-ts</strong>
+            <br />
+            <em className="text-lg">
+              A modernised library for R-to-web communication
+            </em>
           </h2>
 
           <div className="mt-4 text-center">
-            <p className="font-bold text-red-600">Tom Elliott</p>
+            <p className="font-bold text-red-500">Tom Elliott</p>
             <p className="text-sm">https://github.com/tmelliott</p>
             <p className="text-sm">https://inzight.co.nz/team/tom</p>
           </div>

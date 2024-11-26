@@ -2,7 +2,6 @@ import { z } from "zod";
 import { Robj, ocap } from "rserve-ts";
 
 const appFuns = {
-  //   version: Robj.ocap([], Robj.string(1)),
   version: z.function().returns(z.promise(Robj.character(1))),
   histSample: z
     .function()
