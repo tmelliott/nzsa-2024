@@ -27,8 +27,8 @@ importers:
         specifier: ^15.6.1
         version: 15.6.1(react@18.3.1)
       rserve-ts:
-        specifier: ^0.6.0
-        version: 0.6.0
+        specifier: ^0.6.1
+        version: 0.6.1
       zod:
         specifier: ^3.23.8
         version: 3.23.8
@@ -1485,8 +1485,8 @@ packages:
     deprecated: Rimraf versions prior to v4 are no longer supported
     hasBin: true
 
-  rserve-ts@0.6.0:
-    resolution: {integrity: sha512-SgdNaqAKdbAaXekjvpRZoIq/8QtXb8dPNbGlgTVguswZR7cKHPhTIgxQv5TJFvVqok2B+rfscwj4Zkji0km2sA==}
+  rserve-ts@0.6.1:
+    resolution: {integrity: sha512-oxT5ZttA/IExReAjZzKc80f8ug/y/xeIi2YhKSqvy9Hf7nQaQTmmtmDLfJ+vxqLuPRnhxHwjqhsjN2NpxDtLRw==}
 
   run-parallel@1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
@@ -3271,7 +3271,7 @@ snapshots:
     dependencies:
       glob: 7.2.3
 
-  rserve-ts@0.6.0:
+  rserve-ts@0.6.1:
     dependencies:
       underscore: 1.13.7
       zod: 3.23.8

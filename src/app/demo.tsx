@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import R from "rserve-ts";
 import appFuns, { type App } from "./app.r";
 
@@ -12,7 +12,6 @@ export default function Demo() {
       host: "ws://localhost:8942",
     });
     const a = await con.ocap(appFuns);
-    console.log(a);
     setApp(a);
   };
 
