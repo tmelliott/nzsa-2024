@@ -40,6 +40,7 @@ export default function HomePage() {
               alt=""
               fill={true}
               className="object-contain"
+              priority
             />
           </div>
         </div>
@@ -52,6 +53,7 @@ export default function HomePage() {
             alt="Rserve"
             fill={true}
             className="object-contain py-2"
+            priority
           />
         </div>
       </Slide>
