@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import R from "rserve-ts";
-import appFuns, { type App } from "./app.r";
+import appFuns, { type App } from "../demo/app.r";
 
 export default function Demo() {
   const [app, setApp] = useState<App>();

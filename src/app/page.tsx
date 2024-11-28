@@ -42,7 +42,54 @@ export default function HomePage() {
         </div>
       </Slide>
 
-      <Slide title="What is Rserve?">
+      <Slide title="">
+        <div className="relative h-full">
+          <Image
+            src="/inzight.png"
+            alt="Rserve"
+            fill={true}
+            className="object-contain py-2"
+          />
+        </div>
+      </Slide>
+
+      <Slide title="iNZight's future">
+        <div className="flex gap-4">
+          <div className="flex-1">
+            <div className="relative h-24 rounded bg-white/20 shadow">
+              <Image
+                src="/rlogo.png"
+                alt="Rserve"
+                fill={true}
+                className="object-contain py-2"
+              />
+            </div>
+            <List
+              items={["Data analysis", "Data wrangling", "Runs anywhere"]}
+            />
+          </div>
+
+          <div className="flex-1">
+            <div className="relative h-24 rounded bg-white/20 shadow">
+              <Image
+                src="/web3.png"
+                alt="Web technologies"
+                fill={true}
+                className="object-contain py-1"
+              />
+            </div>
+            <List
+              items={[
+                "Front-end user interfaces",
+                "Highly flexible",
+                "Cross-platform",
+              ]}
+            />
+          </div>
+        </div>
+      </Slide>
+
+      <Slide title="Rserve">
         <RserveDiagram />
 
         <div>
@@ -54,14 +101,23 @@ export default function HomePage() {
             items={[
               "Object-capability (Ocap) mode",
               "Last updated ~6 years ago",
-              "Outdated patterns",
+              "Outdated patterns, no Typescript support",
             ]}
           />
         </div>
+
+        <div className="text-xs">
+          Urbanek (2003){" "}
+          <em>
+            Rserve - A Fast Way to Provide R Functionality to Applications
+          </em>
+          , Proceedings of the 3rd Int. Workshop on Distributed Statistical
+          Computing (DSC-2003), 1&ndash;11.
+        </div>
       </Slide>
 
-      <Slide title="What is ReactJS/Typescript?">
-        <div>
+      <Slide title="Typescript">
+        {/* <div>
           <h4 className="font-bold">ReactJS</h4>
           <List
             items={[
@@ -69,18 +125,15 @@ export default function HomePage() {
               "Increasingly popular, 1000's of packages (npmjs.com)",
             ]}
           />
-        </div>
+        </div> */}
 
-        <div>
-          <h4 className="font-bold">Typescript</h4>
-          <List
-            items={[
-              "Adds types to JavaScript",
-              "Development-time errors (literally as you type)",
-              "Autocomplete (+ copilot = 🚀)",
-            ]}
-          />
-        </div>
+        <List
+          items={[
+            "Adds types to JavaScript",
+            "Development-time errors (literally as you type)",
+            "Autocomplete (+ copilot = 🚀)",
+          ]}
+        />
       </Slide>
 
       <Slide>
@@ -137,29 +190,8 @@ console.log(data.name + " is " + data.age);
           ]}
         />
       </Slide>
-      {/*
-      <Slide title="Callback vs Promise">
-        <SyntaxHighlighter
-          language="typescript"
-          customStyle={{
-            borderRadius: "0.5rem",
-          }}
-        >
-          {`// callback (rserve-js)
-R.ocap((err, data) => {
-  data.sample(5, (err, res) => {
-    console.log('Sample: ', res);
-  });
-});
 
-// async/await
-const app = await R.ocap();
-const res = await app.sample(5);
-console.log('Sample: ', res);`}
-        </SyntaxHighlighter>
-      </Slide> */}
-
-      <Slide title="Some R functions that do something cool">
+      <Slide title="A simple sampling app">
         <div className="flex flex-1 items-center justify-center text-sm">
           <SyntaxHighlighter
             language="r"
@@ -172,7 +204,7 @@ console.log('Sample: ', res);`}
         </div>
       </Slide>
 
-      <Slide title="Define types/schema">
+      <Slide title="App schema">
         <div className="flex flex-1 items-center justify-center text-sm">
           <SyntaxHighlighter
             language="typescript"
@@ -186,12 +218,12 @@ console.log('Sample: ', res);`}
       </Slide>
 
       <Slide title="Write app">
-        <div className="flex flex-1 items-center justify-center overflow-scroll text-sm">
+        <div className="flex flex-1 items-center justify-center overflow-scroll text-xl">
+          Live coding demo 😬🤞
           {/* video coding.mp4 */}
-          <video controls className="rounded border border-slate-500 shadow">
+          {/* <video controls className="rounded border border-slate-500 shadow">
             <source src="/coding.mp4" type="video/mp4" />
-          </video>
-
+          </video> */}
           {/* <SyntaxHighlighter
             language="typescript"
             customStyle={{
@@ -272,21 +304,36 @@ console.log('Sample: ', res);`}
 const Rcode =
   "# app.R \n\
 library(Rserve) \n\
-\n\
-list( \n\
-  foo = ocap(function(x) x + 1), \n\
-  bar = ocap(function(str) seq_len(nchar(str))) \n\
-)";
+app <- ocap(function() { \n\
+    list( \n\
+        version = ocap(function() R.version.string), \n\
+        histSample = ocap(function(n) { \n\
+            h <- hist( \n\
+                rnorm(n, ifelse(rbinom(n, 1, 0.2), 3, -1)), \n\
+                breaks = seq(-10, 10, by = 1), \n\
+                plot = FALSE \n\
+            ) \n\
+            list(counts = h$counts, breaks = h$breaks) \n\
+        }) \n\
+    ) \n\
+}) \n\
+";
 
 const appSchema =
-  "// app.ts \n\
-import { z } from 'zod'; \n\
-import { Robj } from 'rserve-ts'; \n\
-\n\
-export const appSchema = { \n\
-  foo: Robj.ocap([z.number()], Robj.double(1)), \n\
-  bar: Robj.ocap([z.string()], Robj.integer()), \n\
-};";
+  '// app.ts \n\
+import { z } from "zod"; \n\
+import { Robj } from "rserve-ts"; \n\
+ \n\
+const appFuns = { \n\
+  version: Robj.ocap([], Robj.character(1)), \n\
+  histSample: Robj.ocap( \n\
+    [z.number()], \n\
+    Robj.list({ \n\
+      breaks: Robj.numeric(0), \n\
+      counts: Robj.integer(0), \n\
+    }), \n\
+  ), \n\
+};';
 
 const appCode =
   '// app.ts \n\

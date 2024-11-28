@@ -2,6 +2,8 @@ import "~/styles/globals.css";
 
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
+import { useState } from "react";
+import Background from "./Background";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -18,7 +20,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable} text-[min(3vh,2.25vw)]`}>
       <body>
-        <main className="h-screen snap-y snap-mandatory items-center overflow-y-scroll bg-black bg-[url('/ial-bg.png')] bg-contain bg-bottom bg-no-repeat text-red-50">
+        <main className="h-screen snap-y snap-mandatory items-center overflow-y-scroll bg-black text-red-50">
+          <Background />
           {children}
         </main>
       </body>
@@ -35,7 +38,7 @@ export const Slide = ({
 }) => {
   return (
     <div className={`h-screen w-full snap-start snap-always p-4`}>
-      <div className="isolate mx-auto flex aspect-[4/3] max-h-full max-w-full flex-col gap-6 rounded-lg bg-white/10 p-8 text-xl shadow shadow-black ring-1 ring-black/5 backdrop-blur-lg">
+      <div className="isolate mx-auto flex aspect-[4/3] max-h-full max-w-full flex-col gap-6 rounded-lg bg-black/30 p-8 text-xl shadow shadow-black ring-1 ring-black/5 backdrop-blur-lg">
         {title && (
           <h1 className="text-3xl font-bold tracking-tight text-red-500">
             {title}

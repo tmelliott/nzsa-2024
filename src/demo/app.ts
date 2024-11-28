@@ -1,8 +1,8 @@
 // app.ts
-import { z } from "zod";
-import { Robj } from "rserve-ts";
+import R from "rserve-ts";
+import appFuns from "./app.r";
 
-export const appSchema = {
-  foo: Robj.ocap([z.number()], Robj.numeric(1)),
-  bar: Robj.ocap([z.string()], Robj.integer()),
-};
+(async () => {
+  const s = await R.create({ host: "ws://localhost:8181" });
+  const app = await s.ocap(appFuns);
+})();
