@@ -9,7 +9,8 @@ export default function Demo() {
 
   const connect = async () => {
     const con = await R.create({
-      host: "ws://localhost:8942",
+      // host: "ws://localhost:8942",
+      host: "wss://elliott-nzsa2024-ws.up.railway.app",
     });
     const a = await con.ocap(appFuns);
     setApp(a);
