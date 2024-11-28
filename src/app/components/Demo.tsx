@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import R from "rserve-ts";
-import appFuns, { type App } from "../demo/app.r";
+import appFuns, { type App } from "../../demo/app.r";
 
 export default function Demo() {
   const [app, setApp] = useState<App>();
@@ -37,10 +37,6 @@ export default function Demo() {
   );
 }
 
-// ideas:
-// - basic histogram of a sample of data (e.g., a bootstrap)
-// - option to perform N bootstraps and see progress bar
-
 const Rversion = ({ app }: { app: App }) => {
   const v = useVersion(app);
   return <div>Connected to: {v ?? "unknown"}</div>;
@@ -53,15 +49,14 @@ const useVersion = (app: App) => {
       const v = await app.version();
       setVersion(v);
     };
-    getVersion();
+    void getVersion();
   }, [app]);
   return version;
 };
 
 const Rhist = ({ app }: { app: App }) => {
   const [n, setN] = useState(10);
-  const [update, setUpdate] = useState(0);
-  const hist = useHist(app, n, update);
+  const { hist, update } = useHist(app, n);
 
   return (
     <div className="mt-4 flex flex-col gap-2">
@@ -76,7 +71,7 @@ const Rhist = ({ app }: { app: App }) => {
         />
         <button
           className="rounded bg-orange-700 p-2 text-sm text-slate-50 shadow hover:bg-orange-800"
-          onClick={() => setUpdate(update + 1)}
+          onClick={() => update()}
         >
           Generate
         </button>
@@ -91,7 +86,7 @@ const Rhist = ({ app }: { app: App }) => {
                 style={{
                   height: `${f * 100}%`,
                 }}
-                onClick={(e) => alert(`bin ${i}: ${hist.counts[i]}`)}
+                // onClick={() => alert(`bin ${i}: ${hist.counts[i]}`)}
               ></div>
             ))}
           </div>
@@ -101,7 +96,7 @@ const Rhist = ({ app }: { app: App }) => {
   );
 };
 
-const useHist = (app: App, n: number, update: number) => {
+const useHist = (app: App, n: number) => {
   const [hist, setHist] = useState<{
     breaks: Float64Array;
     counts: Int32Array;
@@ -109,34 +104,38 @@ const useHist = (app: App, n: number, update: number) => {
   }>();
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout>();
 
-  useEffect(() => {
-    if (n < 2 || update === 0) return;
-    const getHist = async () => {
-      const h = await app.histSample(n);
-      const nmax = Math.max(...h.counts);
-      if (hist === undefined) {
+  const getHist = async () => {
+    const h = await app.histSample(n);
+    const nmax = Math.max(...h.counts);
+    if (hist === undefined) {
+      setHist({
+        breaks: h.breaks,
+        counts: h.counts.map(() => 0),
+        freq: Array.from(h.counts).map(() => 0),
+      });
+    }
+    setTimeout(
+      () =>
         setHist({
           breaks: h.breaks,
-          counts: h.counts.map((c) => 0),
-          freq: Array.from(h.counts).map((c) => 0),
-        });
-      }
-      setTimeout(
-        () =>
-          setHist({
-            breaks: h.breaks,
-            counts: h.counts,
-            freq: Array.from(h.counts).map((c) => c / nmax),
-          }),
-        100,
-      );
-    };
+          counts: h.counts,
+          freq: Array.from(h.counts).map((c) => c / nmax),
+        }),
+      100,
+    );
+  };
+
+  const update = () => {
+    if (n < 2) return;
     if (timeoutId) clearTimeout(timeoutId);
-    setTimeoutId(setTimeout(() => getHist(), 200));
+    setTimeoutId(setTimeout(() => void getHist(), 200));
 
     return () => {
       if (timeoutId) clearTimeout(timeoutId);
     };
-  }, [app, update]);
-  return hist;
+  };
+  return {
+    hist,
+    update,
+  };
 };

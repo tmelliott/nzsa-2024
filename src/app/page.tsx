@@ -1,9 +1,12 @@
 import Image from "next/image";
 import SyntaxHighlighter from "react-syntax-highlighter";
-import { List, Slide, size } from "./layout";
-import Demo from "./demo";
-import { RserveDiagram } from "./diagram-rserve";
-import { Metadata } from "next";
+
+import Demo from "./components/Demo";
+import { RserveDiagram } from "./components/RserveDiagram";
+import { type Metadata } from "next";
+import Slide from "./components/Slide";
+import List from "./components/List";
+import { size } from "./lib/helpers";
 
 export const metadata: Metadata = {
   title: "Introducing rserve-ts",
@@ -139,7 +142,7 @@ export default function HomePage() {
       <Slide>
         <div className="flex flex-1 items-center text-center text-3xl italic">
           <p>
-            But &hellip; what if you're interfacing with an{" "}
+            But &hellip; what if you&apos;re interfacing with an{" "}
             <strong className="text-green-600">untyped</strong> ecosystem like
             R?
           </p>
@@ -245,10 +248,11 @@ console.log(data.name + " is " + data.age);
         <List
           items={[
             "R package for describing 'ocap' functions and compiling them into valid Typescript definitions",
-            <p>
-              React library for 'hooks' (e.g., <code>useRserve()</code>)
+            <p key="px">
+              React library for &lsquo;hooks&rsquo; (e.g.,{" "}
+              <code>useRserve()</code>)
             </p>,
-            <div>
+            <div key="py">
               <p>Some (initial) widgets for common outputs:</p>
               <p>tables, plots, etc.</p>
             </div>,
@@ -335,22 +339,22 @@ const appFuns = { \n\
   ), \n\
 };';
 
-const appCode =
-  '// app.ts \n\
-import R from \'rserve-ts\'; \n\
-import { appSchema } from \'./app\'; \n\
-\n\
-(async () => { \n\
-  const s = await R.connect({ host: "ws://localhost:8181" }); \n\
-  const app = await s.ocap(appSchema); \n\
-\n\
-  const num: number = 5; \n\
-  const x = await app.foo(num); // x: number \n\
-  // await app.foo("hello"); // ts-error \n\
-\n\
-  const y = app.bar("hello"); // y: number | \n\
-  //   (Int32Array & { r_type: "int_array"; }; \n\
-  if (y instanceof Int32Array) { \n\
-    y.map((i) => console.log(i - 1)); // [0, 1, 2, 3, 4] \n\
-  } \n\
-})();';
+// const appCode =
+//   '// app.ts \n\
+// import R from \'rserve-ts\'; \n\
+// import { appSchema } from \'./app\'; \n\
+// \n\
+// (async () => { \n\
+//   const s = await R.connect({ host: "ws://localhost:8181" }); \n\
+//   const app = await s.ocap(appSchema); \n\
+// \n\
+//   const num: number = 5; \n\
+//   const x = await app.foo(num); // x: number \n\
+//   // await app.foo("hello"); // ts-error \n\
+// \n\
+//   const y = app.bar("hello"); // y: number | \n\
+//   //   (Int32Array & { r_type: "int_array"; }; \n\
+//   if (y instanceof Int32Array) { \n\
+//     y.map((i) => console.log(i - 1)); // [0, 1, 2, 3, 4] \n\
+//   } \n\
+// })();';

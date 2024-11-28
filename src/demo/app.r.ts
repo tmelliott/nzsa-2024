@@ -12,7 +12,7 @@ const appFuns = {
   ),
 };
 
-const zapp = z.object(appFuns);
+export const zapp = z.object(appFuns);
 export type App = z.infer<typeof zapp>;
 
 export default appFuns;
