@@ -9,5 +9,5 @@ wrap.js.fun <- function(s) {
     }
 }
 
-source("server/app.R")
+source("app.R")
 oc.init <- function() app

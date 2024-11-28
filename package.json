@@ -8,7 +8,7 @@
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start",
-    "rserve": "Rscript server/start.R"
+    "rserve": "cd server && Rscript start.R"
   },
   "dependencies": {
     "@t3-oss/env-nextjs": "^0.10.1",

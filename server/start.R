@@ -1,4 +1,4 @@
-source("server/init.R")
+source("init.R")
 
 Rserve::run.Rserve(
     websockets.port = "8942",
