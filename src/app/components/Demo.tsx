@@ -83,9 +83,9 @@ const Rhist = ({ app }: { app: App }) => {
               <div
                 className="flex h-full w-full flex-1 cursor-pointer items-end hover:bg-slate-700"
                 onClick={() => app.addMode(i - 10)}
+                key={i}
               >
                 <div
-                  key={i}
                   className="flex w-full flex-1 cursor-pointer flex-col items-center bg-white transition-[height] duration-300 hover:bg-gray-100"
                   style={{
                     height: `${f * 100}%`,
