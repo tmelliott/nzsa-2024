@@ -10,9 +10,9 @@ const appFuns = {
       counts: Robj.integer(0),
     }),
   ),
+  addMode: Robj.ocap([z.number()], Robj.integer()),
 };
 
 export const zapp = z.object(appFuns);
 export type App = z.infer<typeof zapp>;
-
 export default appFuns;

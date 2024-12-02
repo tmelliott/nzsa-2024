@@ -9,8 +9,8 @@ export default function Demo() {
 
   const connect = async () => {
     const con = await R.create({
-      // host: "ws://localhost:8942",
-      host: "wss://elliott-nzsa2024-ws.up.railway.app",
+      host: "ws://localhost:8942",
+      // host: "wss://elliott-nzsa2024-ws.up.railway.app",
     });
     const a = await con.ocap(appFuns);
     setApp(a);
@@ -25,7 +25,6 @@ export default function Demo() {
         </div>
       ) : (
         <div className="flex flex-col gap-2">
-          RSERVE DEMO
           <button
             className="rounded bg-green-600 px-4 py-2 text-lg font-bold uppercase text-white hover:bg-green-700"
             onClick={connect}
@@ -82,13 +81,17 @@ const Rhist = ({ app }: { app: App }) => {
           <div className="flex h-full w-full items-end justify-between gap-1">
             {Array.from(hist.freq).map((f, i) => (
               <div
-                key={i}
-                className="flex w-full flex-1 cursor-pointer flex-col items-center bg-white transition-[height] duration-300 hover:bg-gray-100"
-                style={{
-                  height: `${f * 100}%`,
-                }}
-                // onClick={() => alert(`bin ${i}: ${hist.counts[i]}`)}
-              ></div>
+                className="flex h-full w-full flex-1 cursor-pointer items-end hover:bg-slate-700"
+                onClick={() => app.addMode(i - 10)}
+              >
+                <div
+                  key={i}
+                  className="flex w-full flex-1 cursor-pointer flex-col items-center bg-white transition-[height] duration-300 hover:bg-gray-100"
+                  style={{
+                    height: `${f * 100}%`,
+                  }}
+                ></div>
+              </div>
             ))}
           </div>
         )}

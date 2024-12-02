@@ -7,6 +7,7 @@ import { type Metadata } from "next";
 import Slide from "./components/Slide";
 import List from "./components/List";
 import { size } from "./lib/helpers";
+import TsDemo from "./components/TsDemo";
 
 export const metadata: Metadata = {
   title: "Introducing rserve-ts",
@@ -50,6 +51,18 @@ export default function HomePage() {
         <div className="relative h-full">
           <Image
             src="/inzight.png"
+            alt="Rserve"
+            fill={true}
+            className="object-contain py-2"
+            priority
+          />
+        </div>
+      </Slide>
+
+      <Slide title="">
+        <div className="relative h-full">
+          <Image
+            src="/rip_inzight.jpg"
             alt="Rserve"
             fill={true}
             className="object-contain py-2"
@@ -196,54 +209,14 @@ console.log(data.name + " is " + data.age);
         />
       </Slide>
 
-      <Slide title="A simple sampling app">
-        <div className="flex flex-1 items-center justify-center text-sm">
-          <SyntaxHighlighter
-            language="r"
-            customStyle={{
-              borderRadius: "0.5rem",
-            }}
-          >
-            {Rcode}
-          </SyntaxHighlighter>
-        </div>
-      </Slide>
-
-      <Slide title="App schema">
-        <div className="flex flex-1 items-center justify-center text-sm">
-          <SyntaxHighlighter
-            language="typescript"
-            customStyle={{
-              borderRadius: "0.5rem",
-            }}
-          >
-            {appSchema}
-          </SyntaxHighlighter>
-        </div>
-      </Slide>
-
-      <Slide title="Write app">
-        <div className="flex flex-1 items-center justify-center overflow-scroll text-xl">
-          Live coding demo 😬🤞
-          {/* video coding.mp4 */}
-          {/* <video controls className="rounded border border-slate-500 shadow">
-            <source src="/coding.mp4" type="video/mp4" />
-          </video> */}
-          {/* <SyntaxHighlighter
-            language="typescript"
-            customStyle={{
-              borderRadius: "0.5rem",
-            }}
-          >
-            {appCode}
-          </SyntaxHighlighter> */}
-        </div>
-      </Slide>
-
-      <Slide title="A better example &hellip;">
+      <Slide title="Live demo &hellip; 🤞🤞🤞">
         <div className="flex-1">
           <Demo />
         </div>
+      </Slide>
+
+      <Slide>
+        <TsDemo />
       </Slide>
 
       <Slide title="Next steps">
