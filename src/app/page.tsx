@@ -31,7 +31,7 @@ export default function HomePage() {
           </div>
 
           <div
-            className={`relative mt-24 w-full`}
+            className={`relative mt-12 w-full`}
             style={{
               height: size(12),
             }}
@@ -43,6 +43,12 @@ export default function HomePage() {
               className="object-contain"
               priority
             />
+          </div>
+
+          <div className="mt-12 text-center text-xs">
+            Supported by the <strong>Ngā Puanga Pūtaiao Fellowships</strong>{" "}
+            from <br />
+            Government funding, administered by the Royal Society Te Apārangi.
           </div>
         </div>
       </Slide>
@@ -267,6 +273,12 @@ console.log(data.name + " is " + data.age);
               className="object-contain"
               priority
             />
+          </div>
+
+          <div className="mt-6 text-center text-xs">
+            Supported by the <strong>Ngā Puanga Pūtaiao Fellowships</strong>{" "}
+            from <br />
+            Government funding, administered by the Royal Society Te Apārangi.
           </div>
         </div>
       </Slide>
