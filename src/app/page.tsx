@@ -137,16 +137,6 @@ export default function HomePage() {
       </Slide>
 
       <Slide title="Typescript">
-        {/* <div>
-          <h4 className="font-bold">ReactJS</h4>
-          <List
-            items={[
-              "Framework for building interactive web apps",
-              "Increasingly popular, 1000's of packages (npmjs.com)",
-            ]}
-          />
-        </div> */}
-
         <List
           items={[
             "Adds types to JavaScript",
@@ -176,6 +166,7 @@ export default function HomePage() {
               alt="Zod"
               width={150}
               height={100}
+              priority
             />
             zod.dev
           </div>
@@ -274,6 +265,7 @@ console.log(data.name + " is " + data.age);
               alt=""
               fill={true}
               className="object-contain"
+              priority
             />
           </div>
         </div>

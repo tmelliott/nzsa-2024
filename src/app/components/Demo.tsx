@@ -6,13 +6,16 @@ import appFuns, { type App } from "../../demo/app.r";
 
 export default function Demo() {
   const [app, setApp] = useState<App>();
+  const [connecting, setConnecting] = useState(false);
 
   const connect = async () => {
+    setConnecting(true);
     const con = await R.create({
       host: process.env.NEXT_PUBLIC_RSERVE,
     });
     const a = await con.ocap(appFuns);
     setApp(a);
+    setConnecting(false);
   };
 
   return (
@@ -28,7 +31,7 @@ export default function Demo() {
             className="rounded bg-green-600 px-4 py-2 text-lg font-bold uppercase text-white hover:bg-green-700"
             onClick={connect}
           >
-            Connect
+            {connecting ? "Connecting ..." : "Connect"}
           </button>
         </div>
       )}

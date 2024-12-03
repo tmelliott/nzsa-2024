@@ -9,6 +9,7 @@ export const RserveDiagram = () => {
           alt="JavaScript"
           fill={true}
           className="object-contain"
+          priority
         />
       </div>
       <div className="flex flex-col justify-center gap-12">
@@ -21,6 +22,7 @@ export const RserveDiagram = () => {
           alt="Rserve"
           fill={true}
           className="object-contain"
+          priority
         />
       </div>
     </div>
