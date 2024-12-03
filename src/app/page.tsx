@@ -80,6 +80,7 @@ export default function HomePage() {
                 alt="Rserve"
                 fill={true}
                 className="object-contain py-2"
+                priority
               />
             </div>
             <List
@@ -94,6 +95,7 @@ export default function HomePage() {
                 alt="Web technologies"
                 fill={true}
                 className="object-contain py-1"
+                priority
               />
             </div>
             <List
